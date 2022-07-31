@@ -32,7 +32,7 @@ export default function Signup() {
 
   
   return (
-    <>
+    <div className="w-100" style={{ maxWidth: "500px" }}>
       <Card >
         <Card.Body className="card-form">
           <h2 className="text-center mb-4">Sign Up</h2>
@@ -60,6 +60,6 @@ export default function Signup() {
         {/* Already have an account? <Link to="/login">Log In</Link> */}
         Already have an account? Log In
       </div>
-    </>
+    </div>
   );
 }

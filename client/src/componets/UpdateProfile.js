@@ -32,7 +32,7 @@ export default function UpdateProfile() {
 
   
   return (
-    <>
+    <div className="w-100" style={{ maxWidth: "500px" }}>
       <Card >
         <Card.Body className="card-form">
           <h2 className="text-center mb-4">Update User Details</h2>
@@ -60,6 +60,6 @@ export default function UpdateProfile() {
         </Card.Body>
       </Card>
       
-    </>
+    </div>
   );
 }

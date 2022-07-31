@@ -24,3 +24,9 @@ nav {
   padding: 16px;
   color:white
 }
+
+.lyrics {
+  height: 600px;
+  width: 800px;
+  background-color: white;
+}

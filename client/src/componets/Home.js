@@ -6,8 +6,34 @@ function Home() {
   const titleRef = useRef();
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [lyrics, setLyrics] = useState();
 
-  function handleSubmit (e) {
+
+  async function getLyrics (artist, title) {
+    const baseURL = "https://api.lyrics.ovh/v1/";
+    artist = artistRef.current.value;
+    title = titleRef.current.value;
+
+    if (artist && title) {
+      const query = `${baseURL}/${artist}/${title}`;
+
+      console.log(query);
+
+      await fetch(query)
+      .then((res) => res.json())
+      .then((lyrics) => {
+        // console.log(lyrics.lyrics)
+        setLyrics(lyrics.lyrics);
+      });
+      console.log("lyrics are: " + lyrics);
+      return "success";
+
+    }
+
+    return "fail";
+  }
+
+  async function handleSubmit (e) {
     e.preventDefault ()
 
     try {
@@ -15,6 +41,9 @@ function Home() {
       setLoading(true)
       // await signup(emailRef.current.value, passwordRef.current.value)
       console.log("perform lyrics search of " + artistRef.current.value + " and " + titleRef.current.value)
+      const status = await getLyrics(artistRef.current.value, titleRef.current.value);
+      console.log("status is: " + status);
+      
       // history.push("/")
     } catch {
       setError("Check spelling of artist or title")

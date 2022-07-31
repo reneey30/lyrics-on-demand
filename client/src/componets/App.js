@@ -1,13 +1,18 @@
 import React from "react";
-// import Signup from "./Signup";
+import Signup from "./Signup";
 import { Container } from "react-bootstrap";
 import Favourites from "./Favourites";
-// import Home from "./Home";
+import Lyrics from "./Lyrics";
+import Home from "./Home";
 import NavBarTop from "./NavBarTop";
-// import Login from "./Login";
-// import UpdateProfile from "./UpdateProfile";
+import Login from "./Login";
+import UpdateProfile from "./UpdateProfile";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 function App() {
+
+
   return (
     <>
       <NavBarTop />
@@ -15,9 +20,16 @@ function App() {
         className="d-flex justify-content-center mt-4"
         style={{ minHeight: "100vh" }}
       >
-        <div className="w-100" style={{ maxWidth: "500px" }}>
-          <Favourites/>
-        </div>
+       <Router>
+        <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route path="/favourites" component={Favourites}/>
+          <Route path="/lyrics" component={Lyrics}/>
+          <Route path="/signup" component={Signup}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/updateprofile" component={UpdateProfile}/>
+        </Switch>
+       </Router> 
       </Container>
     </>
   );

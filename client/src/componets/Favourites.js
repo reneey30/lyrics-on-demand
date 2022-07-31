@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card } from "react-bootstrap";
 import { AiFillStar } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
@@ -33,7 +33,7 @@ function Favourites() {
     }
   ]
 
-  
+
   return (
     <>
       <Card style={{ backgroundColor: '#D9D9D9', border: 'none' }}>
