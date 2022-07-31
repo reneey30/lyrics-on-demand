@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
+// import { Link, useHistory } from "react-router-dom"
 
 export default function Signup() {
   const emailRef = useRef();
@@ -7,16 +8,33 @@ export default function Signup() {
   const passwordConfirmRef = useRef();
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  // const history = useHistory()
 
-  async function handleSubmit (e) {
+  function handleSubmit (e) {
     e.preventDefault ()
 
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      return setError("Passwords do not match")
+    }
 
+    try {
+      setError("")
+      setLoading(true)
+      // await signup(emailRef.current.value, passwordRef.current.value)
+      console.log("perform signup")
+      // history.push("/")
+    } catch {
+      setError("Failed to create an account")
+    }
+
+    setLoading(false)
   }
+
+  
   return (
     <>
-      <Card>
-        <Card.Body>
+      <Card >
+        <Card.Body className="card-form">
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
@@ -32,7 +50,7 @@ export default function Signup() {
               <Form.Label>Password Confirmation</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100 my-4" type="submit">
+            <Button variant="secondary" disabled={loading} className="w-100 my-4" type="submit">
               Sign Up
             </Button>
           </Form>

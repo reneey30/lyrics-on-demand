@@ -1,6 +1,8 @@
 import React from "react"
-import Signup from "./Signup";
+// import Signup from "./Signup";
 import { Container } from "react-bootstrap"
+// import Login from "./Login";
+import UpdateProfile from "./UpdateProfile";
 
 
 function App() {
@@ -10,7 +12,7 @@ function App() {
       style={{ minHeight: "100vh" }}
     >
       <div className="w-100" style={{ maxWidth: "500px" }}>
-        <Signup />
+        <UpdateProfile />
       </div>
       
     </Container>
