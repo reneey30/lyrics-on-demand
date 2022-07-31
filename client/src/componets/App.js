@@ -1,21 +1,23 @@
-import React from "react"
+import React from "react";
 // import Signup from "./Signup";
-import { Container } from "react-bootstrap"
+import { Container } from "react-bootstrap";
+import NavBarTop from "./NavBarTop";
 // import Login from "./Login";
 import UpdateProfile from "./UpdateProfile";
 
-
 function App() {
   return (
-    <Container
-      className="d-flex justify-content-center mt-4"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="w-100" style={{ maxWidth: "500px" }}>
-        <UpdateProfile />
-      </div>
-      
-    </Container>
+    <>
+      <NavBarTop />
+      <Container
+        className="d-flex justify-content-center mt-4"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="w-100" style={{ maxWidth: "500px" }}>
+          <UpdateProfile />
+        </div>
+      </Container>
+    </>
   );
 }
 // import React from "react"
@@ -49,6 +51,5 @@ function App() {
 //     </Container>
 //   )
 // }
-
 
 export default App;
