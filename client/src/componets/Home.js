@@ -24,7 +24,7 @@ function Home() {
   }
   return (
     <>
-      <Card>
+      <Card style={{ backgroundColor: '#D9D9D9', border: 'none' }}>
         <Card.Body>
           <h2 className="text-center mb-4">SEARCH LYRICS</h2>
           {error && <Alert variant="danger">{error}</Alert>}
