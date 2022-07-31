@@ -1,9 +1,10 @@
 import React from "react";
 // import Signup from "./Signup";
 import { Container } from "react-bootstrap";
+import Home from "./Home";
 import NavBarTop from "./NavBarTop";
 // import Login from "./Login";
-import UpdateProfile from "./UpdateProfile";
+// import UpdateProfile from "./UpdateProfile";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         style={{ minHeight: "100vh" }}
       >
         <div className="w-100" style={{ maxWidth: "500px" }}>
-          <UpdateProfile />
+          <Home />
         </div>
       </Container>
     </>
