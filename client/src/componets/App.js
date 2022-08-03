@@ -17,7 +17,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   const [lyrics, setLyrics] = useState({});
   // SHIDA!!! try finding out why currentUser value does not persist across pages
-  //
+  //clues to above problem -- seems to be caused by using href a links on navbar..
+  //see if one can navigate using Link or other alternative
   const [currentUser, setCurrentUser] = useState();
 
   function login(email, password) {
@@ -51,7 +52,6 @@ function App() {
         >
           <DataContext.Provider value={sharedData}>
             <Router>
-              
               <Switch>
                 <PrivateRoute exact path="/" component={Home} />
                 <PrivateRoute path="/favourites" component={Favourites} />
@@ -60,7 +60,6 @@ function App() {
                 <Route path="/login" component={Login} />
                 <Route path="/updateprofile" component={UpdateProfile} />
               </Switch>
-              
             </Router>
           </DataContext.Provider>
         </Container>
