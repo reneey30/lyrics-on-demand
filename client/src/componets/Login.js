@@ -1,14 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
-// import { Link, useHistory } from "react-router-dom"
+// import { useAuth } from "../contexts/AuthContext";
+import { OurAuthContext } from "../contexts/OurAuthContext";
+import { Link, useHistory } from "react-router-dom"
 
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
+  // const { login } = useAuth();
+  const { login } = useContext(OurAuthContext);
   
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  // const history = useHistory()
+  const history = useHistory()
 
   function handleSubmit (e) {
     e.preventDefault ()
@@ -18,8 +22,9 @@ export default function Login() {
       setError("")
       setLoading(true)
       // await signup(emailRef.current.value, passwordRef.current.value)
-      console.log("perform login")
-      // history.push("/")
+      console.log("perform login");
+      login();
+      history.push("/")
     } catch {
       setError("Failed to log in")
     }

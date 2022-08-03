@@ -17,10 +17,12 @@ export function AuthProvider({ children }) {
 
   function login(email, password) {
     // return auth.signInWithEmailAndPassword(email, password)
+    setCurrentUser("irene@test.com");
   }
 
   function logout() {
     // return auth.signOut()
+    setCurrentUser();
   }
 
   function updateEmail(email) {

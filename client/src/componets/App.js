@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Signup from "./Signup";
 import { Container } from "react-bootstrap";
 import Favourites from "./Favourites";
@@ -8,40 +8,65 @@ import NavBarTop from "./NavBarTop";
 import Login from "./Login";
 import UpdateProfile from "./UpdateProfile";
 import { DataContext } from "../contexts/DataContext";
+import { AuthProvider } from "../contexts/AuthContext";
+import { OurAuthContext } from "../contexts/OurAuthContext";
+import PrivateRoute from "./PrivateRoute";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-
   const [lyrics, setLyrics] = useState({});
+  // SHIDA!!! try finding out why currentUser value does not persist across pages
+  //
+  const [currentUser, setCurrentUser] = useState();
+
+  function login(email, password) {
+    // return auth.signInWithEmailAndPassword(email, password)
+    setCurrentUser("irene@test.com");
+  }
+
+  function logout() {
+    // return auth.signOut()
+    setCurrentUser();
+  }
 
   const sharedData = {
     lyrics,
-    setLyrics
-  }
-
+    setLyrics,
+  };
+  const authData = {
+    login,
+    logout,
+    currentUser
+  };
 
   return (
     <>
+      {/* <AuthProvider> */}
+      <OurAuthContext.Provider value={authData}>
       <NavBarTop />
-      <Container
-        className="d-flex justify-content-center mt-4"
-        style={{ minHeight: "100vh" }}
-      >
-       <DataContext.Provider value={sharedData}>
-       <Router>
-        <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route path="/favourites" component={Favourites}/>
-          <Route path="/lyrics" component={Lyrics}/>
-          <Route path="/signup" component={Signup}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/updateprofile" component={UpdateProfile}/>
-        </Switch>
-       </Router> 
-       </DataContext.Provider>
-       
-      </Container>
+        <Container
+          className="d-flex justify-content-center mt-4"
+          style={{ minHeight: "100vh" }}
+        >
+          <DataContext.Provider value={sharedData}>
+            <Router>
+              
+              <Switch>
+                <PrivateRoute exact path="/" component={Home} />
+                <PrivateRoute path="/favourites" component={Favourites} />
+                <PrivateRoute path="/lyrics" component={Lyrics} />
+                <Route path="/signup" component={Signup} />
+                <Route path="/login" component={Login} />
+                <Route path="/updateprofile" component={UpdateProfile} />
+              </Switch>
+              
+            </Router>
+          </DataContext.Provider>
+        </Container>
+      </OurAuthContext.Provider>
+        
+      {/* </AuthProvider> */}
     </>
   );
 }
