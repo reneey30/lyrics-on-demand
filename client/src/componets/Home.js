@@ -1,36 +1,49 @@
-import React , { useRef, useState }from 'react'
+import { useRef, useState, useContext }from 'react'
 import { Form, Button, Card, Alert } from "react-bootstrap";
+import { DataContext } from '../contexts/DataContext';
+import { useHistory } from 'react-router-dom';
 
 function Home() {
+  const history = useHistory();
   const artistRef = useRef();
   const titleRef = useRef();
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [lyrics, setLyrics] = useState();
+  // const [lyrics, setLyrics] = useState();
+  const {setLyrics} = useContext(DataContext);
+  
 
 
-  async function getLyrics (artist, title) {
+  function getLyrics (artist, title) {
     const baseURL = "https://api.lyrics.ovh/v1/";
     artist = artistRef.current.value;
     title = titleRef.current.value;
+    
 
     if (artist && title) {
+      const artistAndTitle = [artist, title];
+      const subject = artistAndTitle.join(" - ");
       const query = `${baseURL}/${artist}/${title}`;
 
       console.log(query);
 
-      await fetch(query)
+      fetch(query)
       .then((res) => res.json())
       .then((lyrics) => {
         // console.log(lyrics.lyrics)
-        setLyrics(lyrics.lyrics);
+        setLyrics({
+          subject: subject,
+          lyrics: lyrics.lyrics
+        });
+        // redirect to lyrics
+        history.push("/lyrics");
       });
-      console.log("lyrics are: " + lyrics);
-      return "success";
+      // console.log("lyrics are: " + lyrics);
+      // return "success";
 
     }
 
-    return "fail";
+    // return "fail";
   }
 
   async function handleSubmit (e) {
@@ -41,8 +54,9 @@ function Home() {
       setLoading(true)
       // await signup(emailRef.current.value, passwordRef.current.value)
       console.log("perform lyrics search of " + artistRef.current.value + " and " + titleRef.current.value)
-      const status = await getLyrics(artistRef.current.value, titleRef.current.value);
-      console.log("status is: " + status);
+      // const status = await getLyrics(artistRef.current.value, titleRef.current.value);
+      getLyrics(artistRef.current.value, titleRef.current.value);
+      // console.log("status is: " + status);
       
       // history.push("/")
     } catch {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Signup from "./Signup";
 import { Container } from "react-bootstrap";
 import Favourites from "./Favourites";
@@ -7,10 +7,18 @@ import Home from "./Home";
 import NavBarTop from "./NavBarTop";
 import Login from "./Login";
 import UpdateProfile from "./UpdateProfile";
+import { DataContext } from "../contexts/DataContext";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 function App() {
+
+  const [lyrics, setLyrics] = useState({});
+
+  const sharedData = {
+    lyrics,
+    setLyrics
+  }
 
 
   return (
@@ -20,6 +28,7 @@ function App() {
         className="d-flex justify-content-center mt-4"
         style={{ minHeight: "100vh" }}
       >
+       <DataContext.Provider value={sharedData}>
        <Router>
         <Switch>
           <Route exact path="/" component={Home}/>
@@ -30,6 +39,8 @@ function App() {
           <Route path="/updateprofile" component={UpdateProfile}/>
         </Switch>
        </Router> 
+       </DataContext.Provider>
+       
       </Container>
     </>
   );
