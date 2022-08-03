@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  root "pages/Home"
-  get "signup", to: "users#new"
-  get "login", to: "sessions#new"
-  post "login", to: "sessions#create"
-  delete "logout", to: "sessions#destroy"
-  resources :users, except: [:new]
-  
+
+post '/signup', to: 'users#create'
+get '/me', to: 'users#show'
+resources 'users', only: [:update]
+
+post '/login', to: 'sessions#create'
+delete '/logout', to: 'sessions#destroy'
+
+get '*path', to: 'fallback#index', constraints: ->(req) { !req.xhr? && req.format.html? }
+
 end

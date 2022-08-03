@@ -19,6 +19,9 @@ function App() {
   // SHIDA!!! try finding out why currentUser value does not persist across pages
   //clues to above problem -- seems to be caused by using href a links on navbar..
   //see if one can navigate using Link or other alternative
+  //
+  // alternatively, instead of using this problematic currentUser state, use
+  // cookies to retrieve user info and log in state
   const [currentUser, setCurrentUser] = useState();
 
   function login(email, password) {
