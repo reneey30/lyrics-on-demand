@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def create
-      user = User.find_by(useremail: params[:useremail])
+      user = User.find_by(user_email: params[:user_email])
       if user&.authenticate(params[:password])
           session[:user_id] = user.id
           render json: user, status: :created
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   private
 
   def unauthorized
-      render json: { error: "Wrong useremail or password. Passwords are case-sensitive" }, status: :unauthorized
+      render json: { error: "Wrong user_email or password. Passwords are case-sensitive" }, status: :unauthorized
   end
 
 end
