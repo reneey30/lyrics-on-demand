@@ -1,29 +1,19 @@
 class SessionsController < ApplicationController
-
-  def create
+    skip_before_action :authorize, only: :create
+  
+    def create
       user = User.find_by(user_email: params[:user_email])
       if user&.authenticate(params[:password])
-          session[:user_id] = user.id
-          render json: user, status: :created
-
+        session[:user_id] = user.id
+        render json: user
       else
-          unauthorized
+        render json: { errors: ["Invalid user_email or password"]}, status: :unauthorized
       end
+    end
+  
+  
+    def destroy
+      session.delete :user_id
+      head :no_content
+    end
   end
-
-  def destroy
-      if session[:user_id]
-          session.destroy
-          head :no_content
-      else
-          unauthorized
-      end
-  end
-
-  private
-
-  def unauthorized
-      render json: { error: "Wrong user_email or password. Passwords are case-sensitive" }, status: :unauthorized
-  end
-
-end
