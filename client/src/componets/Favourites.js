@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import { Card, Container } from "react-bootstrap";
 import { AiFillStar } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import NavBarTop from "./NavBarTop";
 
-function Fav({ subject, removeFav }) {
+function Fav({ subject, index }) {
+  // function removeFav(index){
+
+  // }
+  // function seeLyrics(index){
+    
+  // }
   return (
     <li>
       <AiFillStar color="#964B00" size={32} /> {subject} <BsTrash />
@@ -13,24 +19,39 @@ function Fav({ subject, removeFav }) {
 }
 
 function Favourites() {
+  // const [favIds, setFavIds] = useState([]);
+
+
+  // replace favs with database results
   const favs = [
     {
       subject: "Bon Jovi - Clouds",
       lyrics: "abcd",
+      fav_id: 81
     },
     {
       subject: "Patoranking - Suh Different",
       lyrics: "abcd",
+      fav_id: 85
     },
     {
       subject: "Khaligraph Jones - Mbona",
       lyrics: "abcd",
+      fav_id: 77
     },
     {
       subject: "Fully Focus x Bien - Dimension",
       lyrics: "abcd",
+      fav_id: 34
     },
   ];
+
+  // favs.map((fav, index)=>{
+  //   const tempIds = [...favIds];
+  //   tempIds.push(fav.fav_id);
+  //   setFavIds(tempIds);
+  //   console.log(tempIds);
+  // });
 
   return (
     <>
@@ -45,7 +66,7 @@ function Favourites() {
             <div>
               <ul style={{ listStyleType: "none" }}>
                 {favs.map((fav, index) => (
-                  <Fav subject={fav.subject} />
+                  <Fav subject={fav.subject} key={fav.subject} index={index}/>
                 ))}
               </ul>
             </div>
