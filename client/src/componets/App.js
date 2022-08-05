@@ -4,11 +4,11 @@ import { Container } from "react-bootstrap";
 import Favourites from "./Favourites";
 import Lyrics from "./Lyrics";
 import Home from "./Home";
-import NavBarTop from "./NavBarTop";
+// import NavBarTop from "./NavBarTop";
 import Login from "./Login";
 import UpdateProfile from "./UpdateProfile";
 import { DataContext } from "../contexts/DataContext";
-import { AuthProvider } from "../contexts/AuthContext";
+// import { AuthProvider } from "../contexts/AuthContext";
 import { OurAuthContext } from "../contexts/OurAuthContext";
 import PrivateRoute from "./PrivateRoute";
 
@@ -48,11 +48,8 @@ function App() {
     <>
       {/* <AuthProvider> */}
       <OurAuthContext.Provider value={authData}>
-      <NavBarTop />
-        <Container
-          className="d-flex justify-content-center mt-4"
-          style={{ minHeight: "100vh" }}
-        >
+      
+        
           <DataContext.Provider value={sharedData}>
             <Router>
               <Switch>
@@ -65,7 +62,7 @@ function App() {
               </Switch>
             </Router>
           </DataContext.Provider>
-        </Container>
+      
       </OurAuthContext.Provider>
         
       {/* </AuthProvider> */}

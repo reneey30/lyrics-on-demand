@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { DataContext } from "../contexts/DataContext";
-import { Alert } from "react-bootstrap";
+import { Alert, Container } from "react-bootstrap";
+import NavBarTop from './NavBarTop';
 
 function Lyrics() {
   const { lyrics } = useContext(DataContext);
@@ -12,6 +13,11 @@ function Lyrics() {
 
   return (
     <>
+      <NavBarTop/>
+      <Container
+          className="d-flex justify-content-center mt-4"
+          style={{ minHeight: "100vh" }}
+        >
       {isEmpty ? (
         <Alert variant="danger">
           "No lyrics selected, go to homepage or favourites to search"
@@ -28,6 +34,7 @@ function Lyrics() {
           <p className="mt-2">{single.lyrics}</p>
         </div>
       )}
+      </Container>
     </>
   );
 }
