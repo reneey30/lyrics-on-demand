@@ -11,6 +11,15 @@ function NavBarTop() {
   const { currentUser, login, logout } = useContext(OurAuthContext);
   const history = useHistory();
 
+  function handleLogin() {
+    try {
+      console.log("perform login");
+      login();
+      history.push("/");
+    } catch {
+      console.log("Failed to log in");
+    }
+  }
   return (
     <nav className="navbar justify-content-between">
       <h2 className="mx-4">
@@ -36,7 +45,7 @@ function NavBarTop() {
           </Dropdown.Menu>
         </Dropdown>
       ) : (
-        <Button className="mx-4" onClick={login}>
+        <Button className="mx-4" onClick={handleLogin}>
           Log In
         </Button>
       )}

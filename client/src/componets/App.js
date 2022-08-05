@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Signup from "./Signup";
-import { Container } from "react-bootstrap";
 import Favourites from "./Favourites";
 import Lyrics from "./Lyrics";
 import Home from "./Home";
@@ -11,6 +10,7 @@ import { DataContext } from "../contexts/DataContext";
 // import { AuthProvider } from "../contexts/AuthContext";
 import { OurAuthContext } from "../contexts/OurAuthContext";
 import PrivateRoute from "./PrivateRoute";
+import { useHistory } from "react-router-dom";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -24,14 +24,26 @@ function App() {
   // cookies to retrieve user info and log in state
   const [currentUser, setCurrentUser] = useState();
 
+  useEffect(()=>{
+    const savedUser = localStorage.getItem('savedUser');
+    if (savedUser){
+      setCurrentUser(savedUser);
+    }
+  }, [currentUser]);
+
+  const history = useHistory();
+
   function login(email, password) {
     // return auth.signInWithEmailAndPassword(email, password)
-    setCurrentUser("irene@test.com");
+    localStorage.setItem('savedUser', 'njesh@test.com');
+    setCurrentUser("njesh@test.com");
+    // history.push("/");
   }
 
   function logout() {
     // return auth.signOut()
     setCurrentUser();
+    localStorage.clear();
   }
 
   const sharedData = {
@@ -48,8 +60,6 @@ function App() {
     <>
       {/* <AuthProvider> */}
       <OurAuthContext.Provider value={authData}>
-      
-        
           <DataContext.Provider value={sharedData}>
             <Router>
               <Switch>
