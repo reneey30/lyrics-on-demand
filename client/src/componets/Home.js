@@ -13,7 +13,7 @@ function Home() {
   // const [lyrics, setLyrics] = useState();
   const { setLyrics } = useContext(DataContext);
 
-  function getLyrics(artist, title) {
+  async function getLyrics(artist, title) {
     const baseURL = "https://api.lyrics.ovh/v1/";
     artist = artistRef.current.value;
     title = titleRef.current.value;
@@ -25,10 +25,14 @@ function Home() {
 
       console.log(query);
 
-      fetch(query)
+      await fetch(query)
         .then((res) => res.json())
         .then((lyrics) => {
           // console.log(lyrics.lyrics)
+          if (lyrics.error){
+            console.error(lyrics.error);
+            throw lyrics.error;
+          }
           setLyrics({
             subject: subject,
             lyrics: lyrics.lyrics,
@@ -57,12 +61,12 @@ function Home() {
           titleRef.current.value
       );
       // const status = await getLyrics(artistRef.current.value, titleRef.current.value);
-      getLyrics(artistRef.current.value, titleRef.current.value);
+      await getLyrics(artistRef.current.value, titleRef.current.value);
       // console.log("status is: " + status);
 
       // history.push("/")
     } catch {
-      setError("Check spelling of artist or title");
+      setError("No lyrics found. Check spelling of artist or title");
     }
 
     setLoading(false);
