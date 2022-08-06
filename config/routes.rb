@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :favs
+  resources :members
   resources :favourites
   resources :users
   # resources :recipes, only: [:index, :create]
