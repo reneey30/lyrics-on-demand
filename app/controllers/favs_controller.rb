@@ -13,6 +13,12 @@ class FavsController < ApplicationController
     render json: @fav
   end
 
+  # GET /favs/[member_id]
+  def member_favs # GET /mtihani/[member_id]
+    @res = Fav.where(:member_id => params[:member_id])
+    render json: @res
+  end
+
   # POST /favs
   def create
     @fav = Fav.new(fav_params)
