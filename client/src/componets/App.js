@@ -7,63 +7,43 @@ import Home from "./Home";
 import Login from "./Login";
 import UpdateProfile from "./UpdateProfile";
 import { DataContext } from "../contexts/DataContext";
-// import { AuthProvider } from "../contexts/AuthContext";
 import { OurAuthContext } from "../contexts/OurAuthContext";
 import PrivateRoute from "./PrivateRoute";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   const [lyrics, setLyrics] = useState({});
-  
+
   const [currentUser, setCurrentUser] = useState();
 
-  useEffect(()=>{
-    const savedUser = localStorage.getItem('savedUser');
-    if (savedUser){
+  useEffect(() => {
+    const savedUser = localStorage.getItem("savedUser");
+    if (savedUser) {
       setCurrentUser(savedUser);
     }
   }, [currentUser]);
 
-  const history = useHistory();
+  // const history = useHistory();
 
-  // async function authenticateMember(){
-  //   fetch("/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username,
-  //       password,
-  //       password_confirmation: passwordConfirmation,
-  //     }),
-  //   })
-  //     .then((r) => r.json())
-  // }
-
-
-  // const API_BASE = "http://localhost:3000/";
-
-  // async function fetchHandler(API_BASE, route){
-
-  //   const query = `${API_BASE}/${route}`
-  //   await fetch(query)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         return data;
-  //       });
-  // }
+  async function authenticateMember(member_email, password) {
+    return await fetch("/members/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        member_email,
+        password,
+      }),
+    }).then((r) => {
+      return r.json()
+    });
+  }
 
   async function login(email, password) {
-    // return auth.signInWithEmailAndPassword(email, password)
-    localStorage.setItem('savedUser', 'njesh@test.com');
-    setCurrentUser("njesh@test.com");
-    history.push("/");
-    // const route = ()
-    // await fetchHandler(API_BASE,)
-
+    return await authenticateMember(email, password);
   }
 
   function logout() {
@@ -79,28 +59,28 @@ function App() {
   const authData = {
     login,
     logout,
-    currentUser
+    currentUser,
+    setCurrentUser
   };
 
   return (
     <>
       {/* <AuthProvider> */}
       <OurAuthContext.Provider value={authData}>
-          <DataContext.Provider value={sharedData}>
-            <Router>
-              <Switch>
-                <PrivateRoute exact path="/" component={Home} />
-                <PrivateRoute path="/favourites" component={Favourites} />
-                <PrivateRoute path="/lyrics" component={Lyrics} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/login" component={Login} />
-                <Route path="/updateprofile" component={UpdateProfile} />
-              </Switch>
-            </Router>
-          </DataContext.Provider>
-      
+        <DataContext.Provider value={sharedData}>
+          <Router>
+            <Switch>
+              <PrivateRoute exact path="/" component={Home} />
+              <PrivateRoute path="/favourites" component={Favourites} />
+              <PrivateRoute path="/lyrics" component={Lyrics} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/login" component={Login} />
+              <Route path="/updateprofile" component={UpdateProfile} />
+            </Switch>
+          </Router>
+        </DataContext.Provider>
       </OurAuthContext.Provider>
-        
+
       {/* </AuthProvider> */}
     </>
   );
