@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  resources :favs
-  resources :members
+  resources :favs, except: [:index, :update]
+  resources :members, except: :index
 
   # get "/mtihani/:member_id", to: "favs#mtihani"
 
