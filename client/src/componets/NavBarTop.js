@@ -45,9 +45,9 @@ function NavBarTop() {
           </Dropdown.Menu>
         </Dropdown>
       ) : (
-        <Button className="mx-4" onClick={handleLogin}>
-          Log In
-        </Button>
+        <div className="mx-4">
+          Not Logged in
+        </div>
       )}
     </nav>
   );

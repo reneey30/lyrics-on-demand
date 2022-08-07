@@ -55,7 +55,10 @@ class MembersController < ApplicationController
     if @member.update(member_email: params[:member_email], password: params[:password])
       render json: @member
     else
-      render json: @member.errors, status: :unprocessable_entity
+      # render json: @member.errors, status: :unprocessable_entity
+      msg = {:error => "error updating details"}
+      # msg = {:error => @member.errors[:member_email]}
+      render json: msg
     end
     # @message = ""
     # @entry = Member.find(params[:id])

@@ -9,7 +9,7 @@ import UpdateProfile from "./UpdateProfile";
 import { DataContext } from "../contexts/DataContext";
 import { OurAuthContext } from "../contexts/OurAuthContext";
 import PrivateRoute from "./PrivateRoute";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -18,6 +18,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState();
   const [memberId, setMemberId ] = useState();
+  
 
   useEffect(() => {
     const savedUser = localStorage.getItem("savedUser");
@@ -26,11 +27,11 @@ function App() {
     }
   }, [currentUser]);
 
-  // const history = useHistory();
+  const history = useHistory();
 
-  async function authenticateFetch(member_email, password, route) {
+  async function authenticateFetch(member_email, password, route, fetchMethod) {
     return await fetch(route, {
-      method: "POST",
+      method: fetchMethod,
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,15 +44,25 @@ function App() {
     });
   }
 
-
+  async function update(email, password) {
+    if (!memberId){
+      console.error("no member id set");
+      return
+    }
+    const route = `/members/${memberId}`;
+    const method = "PATCH";
+    return await authenticateFetch(email, password, route, method);
+  }
 
   async function login(email, password) {
     const route = "/members/login";
-    return await authenticateFetch(email, password, route);
+    const method = "POST";
+    return await authenticateFetch(email, password, route, method);
   }
   async function signup(email, password) {
     const route = "/members";
-    return await authenticateFetch(email, password, route);
+    const method = "POST";
+    return await authenticateFetch(email, password, route, method);
   }
 
   function logout() {
@@ -68,6 +79,7 @@ function App() {
     login,
     logout,
     signup,
+    update,
     currentUser,
     setCurrentUser,
     memberId,
@@ -86,7 +98,7 @@ function App() {
               <PrivateRoute path="/lyrics" component={Lyrics} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
-              <Route path="/updateprofile" component={UpdateProfile} />
+              <PrivateRoute path="/updateprofile" component={UpdateProfile} />
             </Switch>
           </Router>
         </DataContext.Provider>

@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import NavBarTop from "./NavBarTop";
-// import { Link, useHistory } from "react-router-dom"
+import { OurAuthContext } from "../contexts/OurAuthContext";
+import { Link, useHistory } from "react-router-dom"
 
 export default function UpdateProfile() {
   const emailRef = useRef();
@@ -9,9 +10,10 @@ export default function UpdateProfile() {
   const passwordConfirmRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  // const history = useHistory()
+  const history = useHistory()
+  const { update, setCurrentUser } = useContext(OurAuthContext);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -22,10 +24,20 @@ export default function UpdateProfile() {
       setError("");
       setLoading(true);
       // await signup(emailRef.current.value, passwordRef.current.value)
-      console.log("perform signup");
+      console.log("perform update");
+      const res = await update(emailRef.current.value, passwordRef.current.value);
+      console.log(res);
+      if (res.member_email){
+        setCurrentUser(res.member_email);
+        localStorage.setItem("savedUser", res.member_email);
+        history.push("/");
+      }
+      else if (res.error){
+        setError(res.error);
+      }
       // history.push("/")
     } catch {
-      setError("Failed to create an account");
+      setError("Failed to update details");
     }
 
     setLoading(false);

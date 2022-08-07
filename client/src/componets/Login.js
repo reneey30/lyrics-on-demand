@@ -1,16 +1,13 @@
 import React, { useRef, useState, useContext } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-
 import { OurAuthContext } from "../contexts/OurAuthContext";
-
-
 import { Link, useHistory } from "react-router-dom";
 import NavBarTop from "./NavBarTop";
 
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
-  // const { login } = useAuth();
+  
   const { login, setCurrentUser, setMemberId } = useContext(OurAuthContext);
   
 
@@ -24,20 +21,21 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
-      // await signup(emailRef.current.value, passwordRef.current.value)
+      
       console.log("perform login");
       const res = await login(emailRef.current.value, passwordRef.current.value);
       console.log(res);
       if (res.success){
         setCurrentUser(res.member_email);
         setMemberId(res.member_id);
+        console.log(res.member_id)
         localStorage.setItem("savedUser", res.member_email);
         history.push("/");
       }
       else if (res.error){
         setError(res.error);
       }
-      // history.push("/");
+     
     } catch {
       setError("Failed to log in");
     }
