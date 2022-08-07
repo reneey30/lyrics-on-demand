@@ -28,6 +28,22 @@ function App() {
 
   const history = useHistory();
 
+  // async function authenticateMember(){
+  //   fetch("localhost:3000/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       username,
+  //       password,
+  //       password_confirmation: passwordConfirmation,
+  //     }),
+  //   })
+  //     .then((r) => r.json())
+  // }
+
+
   // const API_BASE = "http://localhost:3000/";
 
   // async function fetchHandler(API_BASE, route){
