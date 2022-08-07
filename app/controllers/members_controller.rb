@@ -41,7 +41,10 @@ class MembersController < ApplicationController
     if @member.save
       render json: @member, status: :created, location: @member
     else
-      render json: @member.errors, status: :unprocessable_entity
+      # render json: @member.errors, status: :unprocessable_entity
+      msg = {:error => "error signing up"}
+      # msg = {:error => @member.errors[:member_email]}
+      render json: msg
     end
     # render json: @member
   end

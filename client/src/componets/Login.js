@@ -11,7 +11,7 @@ export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
   // const { login } = useAuth();
-  const { login, setCurrentUser } = useContext(OurAuthContext);
+  const { login, setCurrentUser, setMemberId } = useContext(OurAuthContext);
   
 
   const [error, setError] = useState("");
@@ -30,6 +30,7 @@ export default function Login() {
       console.log(res);
       if (res.success){
         setCurrentUser(res.member_email);
+        setMemberId(res.member_id);
         localStorage.setItem("savedUser", res.member_email);
         history.push("/");
       }

@@ -1,7 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import NavBarTop from "./NavBarTop";
 import { Link, useHistory } from "react-router-dom"
+
+import { OurAuthContext } from "../contexts/OurAuthContext";
+
 
 export default function Signup() {
   const emailRef = useRef();
@@ -9,9 +12,10 @@ export default function Signup() {
   const passwordConfirmRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  // const history = useHistory()
+  const history = useHistory()
+  const { signup, setCurrentUser, setMemberId } = useContext(OurAuthContext);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -23,6 +27,17 @@ export default function Signup() {
       setLoading(true);
       // await signup(emailRef.current.value, passwordRef.current.value)
       console.log("perform signup");
+      const res = await signup(emailRef.current.value, passwordRef.current.value);
+      console.log(res);
+      if (res.id){
+        setCurrentUser(res.member_email);
+        setMemberId(res.id);
+        localStorage.setItem("savedUser", res.member_email);
+        history.push("/");
+      }
+      else if (res.error){
+        setError(res.error);
+      }
       // history.push("/")
     } catch {
       setError("Failed to create an account");

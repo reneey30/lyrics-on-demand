@@ -17,6 +17,7 @@ function App() {
   const [lyrics, setLyrics] = useState({});
 
   const [currentUser, setCurrentUser] = useState();
+  const [memberId, setMemberId ] = useState();
 
   useEffect(() => {
     const savedUser = localStorage.getItem("savedUser");
@@ -27,8 +28,8 @@ function App() {
 
   // const history = useHistory();
 
-  async function authenticateMember(member_email, password) {
-    return await fetch("/members/login", {
+  async function authenticateFetch(member_email, password, route) {
+    return await fetch(route, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,8 +43,15 @@ function App() {
     });
   }
 
+
+
   async function login(email, password) {
-    return await authenticateMember(email, password);
+    const route = "/members/login";
+    return await authenticateFetch(email, password, route);
+  }
+  async function signup(email, password) {
+    const route = "/members";
+    return await authenticateFetch(email, password, route);
   }
 
   function logout() {
@@ -59,8 +67,11 @@ function App() {
   const authData = {
     login,
     logout,
+    signup,
     currentUser,
-    setCurrentUser
+    setCurrentUser,
+    memberId,
+    setMemberId
   };
 
   return (
