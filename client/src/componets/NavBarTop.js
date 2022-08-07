@@ -1,25 +1,14 @@
 import React, { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { useAuth } from "../contexts/AuthContext";
 import { OurAuthContext } from "../contexts/OurAuthContext";
-import { Button } from "react-bootstrap";
 
 function NavBarTop() {
   // const {currentUser} = useAuth();
 
-  const { currentUser, login, logout } = useContext(OurAuthContext);
-  const history = useHistory();
+  const { currentUser, logout } = useContext(OurAuthContext);
 
-  function handleLogin() {
-    try {
-      console.log("perform login");
-      login();
-      history.push("/");
-    } catch {
-      console.log("Failed to log in");
-    }
-  }
   return (
     <nav className="navbar justify-content-between">
       <h2 className="mx-4">

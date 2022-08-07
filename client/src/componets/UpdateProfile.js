@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import NavBarTop from "./NavBarTop";
 import { OurAuthContext } from "../contexts/OurAuthContext";
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 export default function UpdateProfile() {
   const emailRef = useRef();

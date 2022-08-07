@@ -9,7 +9,7 @@ import UpdateProfile from "./UpdateProfile";
 import { DataContext } from "../contexts/DataContext";
 import { OurAuthContext } from "../contexts/OurAuthContext";
 import PrivateRoute from "./PrivateRoute";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -27,7 +27,7 @@ function App() {
     }
   }, [currentUser]);
 
-  const history = useHistory();
+  // const history = useHistory();
 
   async function authenticateFetch(member_email, password, route, fetchMethod) {
     return await fetch(route, {
