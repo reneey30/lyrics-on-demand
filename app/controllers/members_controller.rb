@@ -13,6 +13,26 @@ class MembersController < ApplicationController
     render json: @member
   end
 
+  def login
+    if Member.exists?(member_email: params[:member_email])
+
+      check_member = Member.find_by_member_email(params[:member_email])
+
+      if check_member.authenticate(params[:password])
+        msg = {:success => "Signed in #{params[:member_email] } successfully", :member_id => check_member[:id], :member_email => check_member[:member_email]} 
+        render json: msg
+      else
+        msg = {:error => "Incorrect password!"}
+        render json: msg
+      end
+
+    else
+      msg = {:error => "The email: #{params[:member_email]} does not exists. Sign up instead"}
+     
+      render json: msg
+    end
+  end
+
   # POST /members
   def create
     # @member = Member.new(member_params)

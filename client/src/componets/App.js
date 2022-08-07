@@ -16,12 +16,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   const [lyrics, setLyrics] = useState({});
-  // SHIDA!!! try finding out why currentUser value does not persist across pages
-  //clues to above problem -- seems to be caused by using href a links on navbar..
-  //see if one can navigate using Link or other alternative
-  //
-  // alternatively, instead of using this problematic currentUser state, use
-  // cookies to retrieve user info and log in state
+  
   const [currentUser, setCurrentUser] = useState();
 
   useEffect(()=>{
@@ -33,11 +28,26 @@ function App() {
 
   const history = useHistory();
 
-  function login(email, password) {
+  // const API_BASE = "http://localhost:3000/";
+
+  // async function fetchHandler(API_BASE, route){
+
+  //   const query = `${API_BASE}/${route}`
+  //   await fetch(query)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         return data;
+  //       });
+  // }
+
+  async function login(email, password) {
     // return auth.signInWithEmailAndPassword(email, password)
     localStorage.setItem('savedUser', 'njesh@test.com');
     setCurrentUser("njesh@test.com");
-    // history.push("/");
+    history.push("/");
+    // const route = ()
+    // await fetchHandler(API_BASE,)
+
   }
 
   function logout() {
