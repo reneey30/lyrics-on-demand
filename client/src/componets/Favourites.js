@@ -1,57 +1,73 @@
-import React, {useState} from "react";
-import { Card, Container } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { OurAuthContext } from "../contexts/OurAuthContext";
+import { Card, Container, Alert } from "react-bootstrap";
 import { AiFillStar } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import NavBarTop from "./NavBarTop";
 
-function Fav({ subject, index }) {
+function Fav({ subject, index, deleteFavs, seeFavs }) {
   // function removeFav(index){
 
   // }
   // function seeLyrics(index){
-    
+
   // }
   return (
     <li>
-      <AiFillStar color="#964B00" size={32} /> {subject} <BsTrash />
+      <AiFillStar color="#964B00" size={32} />{" "}
+      <span onClick={() => seeFavs(index)}>{subject}</span>{" "}
+      <span onClick={() => deleteFavs(index)}>
+        <BsTrash />
+      </span>
     </li>
   );
 }
 
 function Favourites() {
-  // const [favIds, setFavIds] = useState([]);
+  const { memberId } = useContext(OurAuthContext);
+  const [favs, setFavs] = useState({});
+  const route = `/favs/member/${memberId}`;
 
+  async function fetchFavs(route) {
+    await fetch(route)
+      .then((r) => r.json())
+      .then((data) => {
+        setFavs(data);
+        console.log(data);
+        // return data;
+      });
+  }
 
-  // replace favs with database results
-  const favs = [
-    {
-      subject: "Bon Jovi - Clouds",
-      lyrics: "abcd",
-      fav_id: 81
-    },
-    {
-      subject: "Patoranking - Suh Different",
-      lyrics: "abcd",
-      fav_id: 85
-    },
-    {
-      subject: "Khaligraph Jones - Mbona",
-      lyrics: "abcd",
-      fav_id: 77
-    },
-    {
-      subject: "Fully Focus x Bien - Dimension",
-      lyrics: "abcd",
-      fav_id: 34
-    },
-  ];
+  useEffect(() => {
+    console.log("from useEffect: ");
+    console.log(route);
 
-  // favs.map((fav, index)=>{
-  //   const tempIds = [...favIds];
-  //   tempIds.push(fav.fav_id);
-  //   setFavIds(tempIds);
-  //   console.log(tempIds);
-  // });
+    async function fetchFavsUE(route) {
+      await fetch(route)
+        .then((r) => r.json())
+        .then((data) => {
+          setFavs(data);
+          console.log(data);
+          // return data;
+        });
+    }
+
+    fetchFavsUE(route);
+  }, [memberId]);
+
+  function seeFavs(id) {
+    console.log("id from seeFavs");
+    console.log(id);
+  }
+  async function deleteFavs(id) {
+    console.log("id from deleteFavs");
+    console.log(id);
+
+    const route = `/favs/${id}`;
+    await fetch(route, { method: "DELETE" })
+      .then(fetchFavs(`/favs/member/${memberId}`));
+
+  }
 
   return (
     <>
@@ -65,9 +81,21 @@ function Favourites() {
             <h2 className="text-center mb-4">FAVOURITE LYRICS</h2>
             <div>
               <ul style={{ listStyleType: "none" }}>
-                {favs.map((fav, index) => (
-                  <Fav subject={fav.subject} key={fav.subject} index={index}/>
-                ))}
+                {Array.isArray(favs) && favs.length ? (
+                  favs.map((fav, index) => (
+                    <Fav
+                      subject={fav.subject}
+                      key={fav.subject}
+                      index={fav.id}
+                      deleteFavs={deleteFavs}
+                      seeFavs={seeFavs}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <Alert>No lyrics found</Alert>
+                  </div>
+                )}
               </ul>
             </div>
           </Card.Body>

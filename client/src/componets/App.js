@@ -28,6 +28,20 @@ function App() {
   }, [currentUser]);
 
   // const history = useHistory();
+  // async function favsFetch(route, fetchMethod) {
+  //   return await fetch(route, {
+  //     method: fetchMethod,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       member_email,
+  //       password,
+  //     }),
+  //   }).then((r) => {
+  //     return r.json()
+  //   });
+  // }
 
   async function authenticateFetch(member_email, password, route, fetchMethod) {
     return await fetch(route, {
