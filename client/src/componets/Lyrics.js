@@ -9,7 +9,6 @@ function Lyrics() {
   const [notification, setNotification] = useState();
   const [savedFlag, setSavedFlag] = useState(false);
 
-
   const single = { ...lyrics };
 
   const isEmpty = Object.keys(single).length === 0;
@@ -43,7 +42,7 @@ function Lyrics() {
 
     const result = await favsFetch(payload);
     if (result.id) {
-      setNotification(`Saved lyrics to favourites list successfully`);
+      setNotification("Saved lyrics to favourites list successfully");
       console.log("saved successfully!");
       setSavedFlag(true);
     }
@@ -65,19 +64,28 @@ function Lyrics() {
           <div className="overflow-scroll lyrics p-4">
             {notification && <Alert variant="success">{notification}</Alert>}
             <div className="d-inline text-center m-4">
-              <span style={{ fontSize: "36px" }}>{single.subject}</span>{" "}
-              <AiFillStar color="#964B00" size={32} />{" "}
-              {savedFlag
-              ?
-              <span> Lyrics available in favourites list </span>
-              :
-              <span
-                className="click-fav clickable"
-                style={{ color: "gray", fontSize: "18px" }}
-                onClick={() => saveFav()}
-              >
-                Favourite this song
-              </span>}
+              <span style={{ fontSize: "36px" }}>{single.subject}</span>
+
+              {savedFlag ? (
+                <span
+                  className="mx-4"
+                  style={{ color: "gray", fontSize: "18px" }}
+                >
+                  {" "}
+                  Lyrics available in favourites list{" "}
+                </span>
+              ) : (
+                <span className="mx-4">
+                  <AiFillStar color="#964B00" size={32} />
+                  <span
+                    className="click-fav clickable"
+                    style={{ color: "gray", fontSize: "18px" }}
+                    onClick={() => saveFav()}
+                  >
+                    Favourite this song
+                  </span>
+                </span>
+              )}
             </div>
             <p className="mt-2">{single.lyrics}</p>
           </div>
