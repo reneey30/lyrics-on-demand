@@ -33,21 +33,17 @@ function Favourites() {
       .then((r) => r.json())
       .then((data) => {
         setFavs(data);
-        console.log(data);
         // return data;
       });
   }
 
   useEffect(() => {
-    console.log("from useEffect: ");
-    console.log(route);
-
     async function fetchFavsUE(route) {
       await fetch(route)
         .then((r) => r.json())
         .then((data) => {
           setFavs(data);
-          console.log(data);
+
           // return data;
         });
     }
@@ -56,9 +52,7 @@ function Favourites() {
   }, [route]);
 
   async function seeFavs(id) {
-    console.log("id from seeFavs");
-    console.log(id);
-
+  
     const query = `/favs/${id}`;
 
     await fetch(query)

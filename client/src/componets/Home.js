@@ -23,12 +23,9 @@ function Home() {
       const subject = artistAndTitle.join(" - ");
       const query = `${baseURL}/${artist}/${title}`;
 
-      console.log(query);
-
       await fetch(query)
         .then((res) => res.json())
         .then((lyrics) => {
-          // console.log(lyrics.lyrics)
           if (lyrics.error){
             console.error(lyrics.error);
             throw lyrics.error;
@@ -40,11 +37,7 @@ function Home() {
           // redirect to lyrics
           history.push("/lyrics");
         });
-      // console.log("lyrics are: " + lyrics);
-      // return "success";
     }
-
-    // return "fail";
   }
 
   async function handleSubmit(e) {
@@ -53,18 +46,9 @@ function Home() {
     try {
       setError("");
       setLoading(true);
-      // await signup(emailRef.current.value, passwordRef.current.value)
-      console.log(
-        "perform lyrics search of " +
-          artistRef.current.value +
-          " and " +
-          titleRef.current.value
-      );
-      // const status = await getLyrics(artistRef.current.value, titleRef.current.value);
+     
       await getLyrics(artistRef.current.value, titleRef.current.value);
-      // console.log("status is: " + status);
-
-      // history.push("/")
+      
     } catch {
       setError("No lyrics found. Check spelling of artist or title");
     }

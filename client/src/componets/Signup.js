@@ -25,10 +25,10 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      // await signup(emailRef.current.value, passwordRef.current.value)
+
       console.log("perform signup");
       const res = await signup(emailRef.current.value, passwordRef.current.value);
-      console.log(res);
+
       if (res.id){
         setCurrentUser(res.member_email);
         setMemberId(res.id);

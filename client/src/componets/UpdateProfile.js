@@ -23,10 +23,10 @@ export default function UpdateProfile() {
     try {
       setError("");
       setLoading(true);
-      // await signup(emailRef.current.value, passwordRef.current.value)
+
       console.log("perform update");
       const res = await update(emailRef.current.value, passwordRef.current.value);
-      console.log(res);
+
       if (res.member_email){
         setCurrentUser(res.member_email);
         localStorage.setItem("savedUser", res.member_email);

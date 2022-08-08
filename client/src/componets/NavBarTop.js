@@ -1,19 +1,19 @@
 import React, { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Link } from "react-router-dom";
-// import { useAuth } from "../contexts/AuthContext";
+import { Link, useLocation } from "react-router-dom";
+
 import { OurAuthContext } from "../contexts/OurAuthContext";
 
 function NavBarTop() {
-  // const {currentUser} = useAuth();
 
   const { currentUser, logout } = useContext(OurAuthContext);
+  const location = useLocation();
 
   return (
     <nav className="navbar justify-content-between">
       <h2 className="mx-4">
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          Lyrics On Demand
+          <span className="clickable click-fav">Lyrics On Demand</span> <span style={{ fontSize: "28px"}}>{location.pathname}</span>
         </Link>
       </h2>
       {currentUser ? (

@@ -22,9 +22,8 @@ export default function Login() {
       setError("");
       setLoading(true);
       
-      console.log("perform login");
       const res = await login(emailRef.current.value, passwordRef.current.value);
-      console.log(res);
+
       if (res.success){
         setCurrentUser(res.member_email);
         setMemberId(res.member_id);

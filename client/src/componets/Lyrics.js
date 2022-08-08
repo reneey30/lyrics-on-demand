@@ -41,6 +41,7 @@ function Lyrics() {
     };
 
     const result = await favsFetch(payload);
+    
     if (result.id) {
       setNotification("Saved lyrics to favourites list successfully");
       console.log("saved successfully!");
