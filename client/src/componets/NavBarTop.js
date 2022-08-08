@@ -8,12 +8,13 @@ function NavBarTop() {
 
   const { currentUser, logout } = useContext(OurAuthContext);
   const location = useLocation();
+  console.log(location.pathname);
 
   return (
     <nav className="navbar justify-content-between">
       <h2 className="mx-4">
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <span className="clickable click-fav">Lyrics On Demand</span> <span style={{ fontSize: "28px"}}>{location.pathname}</span>
+          <span className="clickable click-fav">Lyrics On Demand</span>
         </Link>
       </h2>
       {currentUser ? (
