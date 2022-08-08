@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 // import { OurAuthContext } from "../contexts/OurAuthContext";
+import { DataContext } from "../contexts/DataContext";
 import { useHistory } from "react-router-dom";
 import { Card, Container, Alert } from "react-bootstrap";
 import { AiFillStar } from "react-icons/ai";
@@ -7,12 +8,7 @@ import { BsTrash } from "react-icons/bs";
 import NavBarTop from "./NavBarTop";
 
 function Fav({ subject, index, deleteFavs, seeFavs }) {
-  // function removeFav(index){
 
-  // }
-  // function seeLyrics(index){
-
-  // }
   return (
     <li>
       <AiFillStar color="#964B00" size={32} />{" "}
@@ -26,6 +22,7 @@ function Fav({ subject, index, deleteFavs, seeFavs }) {
 
 function Favourites() {
   // const { memberId } = useContext(OurAuthContext);
+  const { setLyrics } = useContext(DataContext);
   const memberId = localStorage.getItem("savedId");
   const [favs, setFavs] = useState({});
   const route = `/favs/member/${memberId}`;
@@ -58,10 +55,31 @@ function Favourites() {
     fetchFavsUE(route);
   }, [route]);
 
-  function seeFavs(id) {
+  async function seeFavs(id) {
     console.log("id from seeFavs");
     console.log(id);
+
+    const query = `/favs/${id}`;
+
+    await fetch(query)
+        .then((res) => res.json())
+        .then((lyrics) => {
+          // console.log(lyrics.lyrics)
+          if (lyrics.error){
+            console.error(lyrics.error);
+            throw lyrics.error;
+          }
+
+          setLyrics({
+            subject: lyrics.subject,
+            lyrics: lyrics.lyrics,
+          });
+
+          // redirect to lyrics
+          history.push("/lyrics");
+        });
   }
+
   async function deleteFavs(id) {
     
     const route = `/favs/${id}`;
