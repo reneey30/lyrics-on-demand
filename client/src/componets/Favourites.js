@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { OurAuthContext } from "../contexts/OurAuthContext";
+// import { OurAuthContext } from "../contexts/OurAuthContext";
+import { useHistory } from "react-router-dom";
 import { Card, Container, Alert } from "react-bootstrap";
 import { AiFillStar } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
@@ -15,8 +16,8 @@ function Fav({ subject, index, deleteFavs, seeFavs }) {
   return (
     <li>
       <AiFillStar color="#964B00" size={32} />{" "}
-      <span onClick={() => seeFavs(index)}>{subject}</span>{" "}
-      <span onClick={() => deleteFavs(index)}>
+      <span className="click-fav clickable" onClick={() => seeFavs(index)}>{subject}</span>{" "}
+      <span className="clickable" onClick={() => deleteFavs(index)}>
         <BsTrash />
       </span>
     </li>
@@ -24,9 +25,11 @@ function Fav({ subject, index, deleteFavs, seeFavs }) {
 }
 
 function Favourites() {
-  const { memberId } = useContext(OurAuthContext);
+  // const { memberId } = useContext(OurAuthContext);
+  const memberId = localStorage.getItem("savedId");
   const [favs, setFavs] = useState({});
   const route = `/favs/member/${memberId}`;
+  const history = useHistory();
 
   async function fetchFavs(route) {
     await fetch(route)
@@ -53,19 +56,18 @@ function Favourites() {
     }
 
     fetchFavsUE(route);
-  }, [memberId]);
+  }, [route]);
 
   function seeFavs(id) {
     console.log("id from seeFavs");
     console.log(id);
   }
   async function deleteFavs(id) {
-    console.log("id from deleteFavs");
-    console.log(id);
-
+    
     const route = `/favs/${id}`;
     await fetch(route, { method: "DELETE" })
-      .then(fetchFavs(`/favs/member/${memberId}`));
+      // .then(history.push("/"));
+      .then(async ()=> await fetchFavs(`/favs/member/${memberId}`))
 
   }
 
@@ -85,7 +87,7 @@ function Favourites() {
                   favs.map((fav, index) => (
                     <Fav
                       subject={fav.subject}
-                      key={fav.subject}
+                      key={fav.id}
                       index={fav.id}
                       deleteFavs={deleteFavs}
                       seeFavs={seeFavs}

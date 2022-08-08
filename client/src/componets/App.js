@@ -27,22 +27,6 @@ function App() {
     }
   }, [currentUser]);
 
-  // const history = useHistory();
-  // async function favsFetch(route, fetchMethod) {
-  //   return await fetch(route, {
-  //     method: fetchMethod,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       member_email,
-  //       password,
-  //     }),
-  //   }).then((r) => {
-  //     return r.json()
-  //   });
-  // }
-
   async function authenticateFetch(member_email, password, route, fetchMethod) {
     return await fetch(route, {
       method: fetchMethod,
@@ -73,6 +57,7 @@ function App() {
     const method = "POST";
     return await authenticateFetch(email, password, route, method);
   }
+  
   async function signup(email, password) {
     const route = "/members";
     const method = "POST";

@@ -30,6 +30,7 @@ export default function Login() {
         setMemberId(res.member_id);
         console.log(res.member_id)
         localStorage.setItem("savedUser", res.member_email);
+        localStorage.setItem("savedId", res.member_id);
         history.push("/");
       }
       else if (res.error){

@@ -30,3 +30,9 @@ nav {
   width: 800px;
   background-color: white;
 }
+.clickable{
+  cursor: pointer;
+}
+.click-fav:hover{
+  text-decoration: underline;
+}
