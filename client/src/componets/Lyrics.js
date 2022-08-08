@@ -46,6 +46,10 @@ function Lyrics() {
       console.log("saved successfully!");
       setSavedFlag(true);
     }
+    else {
+      setNotification("Error saving lyrics to favourites list");
+    }
+
   }
 
   return (
