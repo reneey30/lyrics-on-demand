@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { DataContext } from "../contexts/DataContext";
 import { Alert, Container } from "react-bootstrap";
@@ -6,6 +6,9 @@ import NavBarTop from "./NavBarTop";
 
 function Lyrics() {
   const { lyrics } = useContext(DataContext);
+  const [notification, setNotification] = useState();
+  const [savedFlag, setSavedFlag] = useState(false);
+
 
   const single = { ...lyrics };
 
@@ -25,6 +28,7 @@ function Lyrics() {
   }
 
   async function saveFav() {
+    setNotification("Saving lyrics to favourites ");
     console.log("Saving lyrics to favourites ");
     const [artist, title] = single.subject.split(" - ");
 
@@ -39,7 +43,9 @@ function Lyrics() {
 
     const result = await favsFetch(payload);
     if (result.id) {
+      setNotification(`Saved lyrics to favourites list successfully`);
       console.log("saved successfully!");
+      setSavedFlag(true);
     }
   }
 
@@ -57,16 +63,21 @@ function Lyrics() {
           style={{ minHeight: "100vh" }}
         >
           <div className="overflow-scroll lyrics p-4">
+            {notification && <Alert variant="success">{notification}</Alert>}
             <div className="d-inline text-center m-4">
               <span style={{ fontSize: "36px" }}>{single.subject}</span>{" "}
               <AiFillStar color="#964B00" size={32} />{" "}
+              {savedFlag
+              ?
+              <span> Lyrics available in favourites list </span>
+              :
               <span
                 className="click-fav clickable"
                 style={{ color: "gray", fontSize: "18px" }}
                 onClick={() => saveFav()}
               >
                 Favourite this song
-              </span>
+              </span>}
             </div>
             <p className="mt-2">{single.lyrics}</p>
           </div>
